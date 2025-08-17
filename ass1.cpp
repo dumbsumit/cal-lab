@@ -8,13 +8,11 @@
 #include <climits>
 using namespace std;
 
-// Question 1: Merge two sorted arrays where first array has space for second
-// You are given two sorted array, A and B, where A has a large enough buffer at the end to hold B.
-// Write a method to merge B into A in sorted order.
+
 void question1() {
     cout << "Question 1: Merge two sorted arrays where first array has space for second" << endl;
     
-    // Initialize arrays
+    
     int A[10] = {1, 3, 5, 7, 9}; 
     int B[] = {2, 4, 6, 8, 10};  
     int m = 5; 
@@ -29,7 +27,7 @@ void question1() {
     for (int i = 0; i < n; i++) cout << B[i] << " ";
     cout << endl;
     
-    // Merge algorithm
+    
     int i = m - 1;     
     int j = n - 1;     
     int k = m + n - 1; 
@@ -58,12 +56,12 @@ void question1() {
     cout << endl << endl;
 }
 
-// Question 2: Sort an array of strings so all anagrams are next to each other
-// Write a method to sort an array of string so that all the anagrams are next to each other.
+
 void question2() {
     cout << "Question 2: Sort strings so anagrams are together" << endl;
     
-    vector<string> arr = {"listen", "silent", "hello", "world", "dog", "god", "cat", "act"};
+    vector<string> arr = {"race", "care", "acre", "stone", "tones", "notes", "loop", "pool", "polo", "top", "pot", "opt"};
+
     
     cout << "Original array: ";
     for (const auto& s : arr) cout << s << " ";
@@ -71,8 +69,8 @@ void question2() {
     
     auto comparator = [](const string& a, const string& b) {
         string sortedA = a;
-        string sortedB = b;
         sort(sortedA.begin(), sortedA.end());
+        string sortedB = b;
         sort(sortedB.begin(), sortedB.end());
         return sortedA < sortedB;
     };
@@ -84,9 +82,7 @@ void question2() {
     cout << endl << endl;
 }
 
-// Question 3: Search in rotated sorted array
-// Given a sorted array of n integers that has been rotated an unknown number of times, 
-// write code to find an element in the array.
+
 int searchRotatedArray(const vector<int>& nums, int target) {
     int left = 0, right = nums.size() - 1;
     
@@ -122,7 +118,7 @@ void question3() {
     cout << "Question 3: Search in rotated sorted array" << endl;
     
     vector<int> nums = {15, 16, 19, 20, 25, 1, 3, 4, 5, 7, 10, 14};
-    int target = 5;
+    int target = 20;
     
     cout << "Array: ";
     for (int num : nums) cout << num << " ";
@@ -135,10 +131,9 @@ void question3() {
 // Question 4: Sort a 20GB file with one string per line
 
 
-// Question 5: Search in array with empty strings
-// Given a sorted array of string which is interspersed with empty string, 
-// write a method to find the location of a given string.
+
 int searchSparseArray(const vector<string>& arr, const string& target) {
+
      // Handle edge case for empty array
     if (arr.empty()) return -1;
      for (int i = 0; i < arr.size(); i++) {
@@ -163,9 +158,7 @@ void question5() {
     cout << "Index of \"" << target << "\": " << index << endl << endl;
 }
 
-// Question 6: Search in a sorted matrix
-// Given an M*N matrix in which each row and each column is sorted in ascending order, 
-// write a method to find an element.
+
 pair<int, int> searchSortedMatrix(const vector<vector<int>>& matrix, int target) {
     if (matrix.empty() || matrix[0].empty()) return {-1, -1};
     
@@ -220,10 +213,6 @@ void question6() {
     cout << "Position of " << target << ": (" << result.first << ", " << result.second << ")" << endl << endl;
 }
 
-// Question 7: Circus tower problem (Longest increasing subsequence)
-// A circus is designing a tower routine consisting of people standing atop one another's shoulders.
-// Each person must be both shorter and lighter than the person below him or her.
-// Given heights and weights, compute the largest possible number of people in such tower.
 struct Person {
     int height;
     int weight;
@@ -276,51 +265,29 @@ void question7() {
     cout << "Maximum number of people in tower: " << max_people << endl << endl;
 }
 
-// Question 8: Rank from stream of integers
-// Implement track(int x) and getRankOfNumber(int x) to support finding the rank 
-// of a number (count of numbers <= x, not including x itself)
-class RankTracker {
-    private:
-        vector<int> arr; 
-        
-    public:
-        RankTracker() {}
-    
-        
-        void track(int x) {
-            arr.push_back(x);
-        }
-    
-       
-        int getRankOfNumber(int x) {
-            int count = 0;
-            for (int num : arr) {
-                if (num <= x) { 
-                    count++;
-                }
-            }
-            return count-1;
-        }
-    };
-    
-    void question8() {
-        cout << "Question 8: Rank from stream of integers (Brute Force Approach)" << endl;
-        
-        vector<int> stream = {5, 1, 4, 4, 5, 9, 7, 13, 3};
-        RankTracker tracker;
-        
-        cout << "Tracking stream: ";
-        for (int num : stream) {
-            cout << num << " ";
-            tracker.track(num);
-        }
-        cout << endl;
-        
-        cout << "getRankOfNumber(1) = " << tracker.getRankOfNumber(1) << endl;
-        cout << "getRankOfNumber(3) = " << tracker.getRankOfNumber(3) << endl;
-        cout << "getRankOfNumber(4) = " << tracker.getRankOfNumber(4) << endl << endl;
+
+int getRankOfNumber(const vector<int>& stream, int x) {
+    int count = 0;
+    for (int num : stream) {
+        if (num <= x) count++;
     }
-    
+    return count - 1;  
+}
+
+void question8() {
+    cout << "Question 8: Rank from stream of integers (Direct Stream Usage)" << endl;
+
+    vector<int> stream = {5, 1, 4, 4, 5, 9, 7, 13, 3};
+
+    cout << "Stream: ";
+    for (int num : stream) cout << num << " ";
+    cout << endl;
+
+    cout << "getRankOfNumber(1) = " << getRankOfNumber(stream, 1) << endl;
+    cout << "getRankOfNumber(3) = " << getRankOfNumber(stream, 3) << endl;
+    cout << "getRankOfNumber(4) = " << getRankOfNumber(stream, 4) << endl;
+}
+
 
 int main() {
     question1();
