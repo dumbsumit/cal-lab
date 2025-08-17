@@ -38,11 +38,11 @@ void question1() {
 
 int findBoxBruteForce(int N, int K) {
     int currentBox = 1;
-    int direction = 1; // 1 = forward, -1 = backward
+    int direction = 1; 
     
     for (int candy = 1; candy <= K; candy++) {
         if (candy == K) {
-            return currentBox; // Found the K-th candy's box
+            return currentBox;
         }
         currentBox += direction;
         if (currentBox > N) {
@@ -120,7 +120,9 @@ void question5(){
     }
     sort(time.begin(),time.end());
     int exp = time[0];
+
     for(int i=0;i<size;i++){
+        if (time[i] < exp) continue;
         if(time[i] == exp){
             exp++;
         }else{
@@ -130,7 +132,7 @@ void question5(){
     cout<<"The missing time is "<<exp<<endl<<endl;
 }
 
-// Q6: Linear Search
+
 void question6(){
     int n, key;
     cout<<"Enter number of elements: ";
@@ -151,7 +153,6 @@ void question6(){
     if(!found) cout<<"Key not found"<<endl<<endl;
 }
 
-// Q7: Binary Search (Iterative)
 void question7(){
     int n, key;
     cout<<"Enter number of elements (sorted): ";
@@ -178,7 +179,7 @@ void question7(){
     if(!found) cout<<"Key not found"<<endl<<endl;
 }
 
-// Q8: Signal Drop Detector
+
 void question8(){
     int n;
     cout<<"Enter number of signal readings: ";
