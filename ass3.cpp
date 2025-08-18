@@ -136,7 +136,7 @@ void question3() {
 
     vector<vector<int>> skyline = getSkyline(buildings);
 
-    cout << "Skyline formed is:\n";
+    cout << "Skyline formed is:"<<endl;
     for(auto& point : skyline){
         cout << "[" << point[0] << "," << point[1] << "] ";
     }
