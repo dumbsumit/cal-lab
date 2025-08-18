@@ -1,5 +1,7 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
+#include <set>
 using namespace std;
 
 void question1(){
@@ -17,19 +19,18 @@ void question1(){
     while (low <= high) {
         int mid = low + (high - low) / 2;
 
-        if ((mid == 0 || arr[mid] > arr[mid - 1]) &&
-            (mid == n - 1 || arr[mid] > arr[mid + 1])) {
-            cout << "Maximum element in bitonic array: " << arr[mid] << endl;
+        if ((arr[mid] > arr[mid - 1]) &&  (arr[mid] > arr[mid + 1])) {
+            cout << "Maximum element in  array: " << arr[mid] << endl;
             return;
         }
-        else if (mid < n - 1 && arr[mid] < arr[mid + 1]) {
+        else if ( arr[mid] < arr[mid + 1]) {
             low = mid + 1;
         }
         else {
             high = mid - 1;
         }
     }
-    cout << "Invalid bitonic array input!" << endl;
+    cout << "Invalid  array input!" << endl;
 }
 
 
@@ -94,78 +95,53 @@ void question2() {
 }
 
 
-struct Strip {
-    int left, ht;
-};
+vector<vector<int>> getSkyline(vector<vector<int>>& buildings) {
+    vector<pair<int,int>> heights;
+    for(auto& b : buildings){
+        heights.push_back({b[0], -b[2]}); 
+        heights.push_back({b[1], b[2]});  
+    }
 
-struct Skyline {
-    vector<Strip> strips;
-};
+    sort(heights.begin(), heights.end());
 
-Skyline mergeSkylines(Skyline left, Skyline right) {
-    Skyline result;
-    int h1 = 0, h2 = 0;
-    int i = 0, j = 0;
+    multiset<int> mset = {0};
+    int prev = 0;
+    vector<vector<int>> res;
 
-    while (i < left.strips.size() && j < right.strips.size()) {
-        int x;
-        if (left.strips[i].left < right.strips[j].left) {
-            x = left.strips[i].left;
-            h1 = left.strips[i].ht;
-            i++;
+    for(auto& h : heights){
+        if(h.second < 0){
+            mset.insert(-h.second); // entering building
         } else {
-            x = right.strips[j].left;
-            h2 = right.strips[j].ht;
-            j++;
+            mset.erase(mset.find(h.second)); // leaving building
         }
-        int maxh = max(h1, h2);
-        if (result.strips.empty() || result.strips.back().ht != maxh) {
-            result.strips.push_back({x, maxh});
+
+        int cur = *mset.rbegin();
+        if(cur != prev){
+            res.push_back({h.first, cur});
+            prev = cur;
         }
     }
-
-    while (i < left.strips.size()) {
-        result.strips.push_back(left.strips[i++]);
-    }
-    while (j < right.strips.size()) {
-        result.strips.push_back(right.strips[j++]);
-    }
-
-    return result;
-}
-
-Skyline findSkyline(vector<vector<int>>& buildings, int l, int r) {
-    if (l == r) {
-        Skyline res;
-        res.strips.push_back({buildings[l][0], buildings[l][1]});
-        res.strips.push_back({buildings[l][2], 0});
-        return res;
-    }
-    int mid = (l + r) / 2;
-    Skyline left = findSkyline(buildings, l, mid);
-    Skyline right = findSkyline(buildings, mid + 1, r);
-    return mergeSkylines(left, right);
+    return res;
 }
 
 void question3() {
-    int n;
-    cout << "Enter number of buildings: ";
-    cin >> n;
-    vector<vector<int>> buildings(n, vector<int>(3));
-    cout << "Enter buildings (left height right):\n";
-    for (int i = 0; i < n; i++) {
-        cin >> buildings[i][0] >> buildings[i][1] >> buildings[i][2];
-    }
+    
+    vector<vector<int>> buildings = {
+        {2, 9, 10}, 
+        {3, 7, 15}, 
+        {5, 12, 12}, 
+        {15, 20, 10}, 
+        {19, 24, 8}
+    };
 
-    Skyline result = findSkyline(buildings, 0, n - 1);
+    vector<vector<int>> skyline = getSkyline(buildings);
 
-    cout << "Skyline:\n";
-    for (auto &s : result.strips) {
-        cout << "(" << s.left << ", " << s.ht << ") ";
+    cout << "Skyline formed is:\n";
+    for(auto& point : skyline){
+        cout << "[" << point[0] << "," << point[1] << "] ";
     }
     cout << endl;
 }
-
 
 int main() {
     question1();
