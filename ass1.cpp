@@ -143,7 +143,6 @@ int searchSparseArray(const vector<string>& arr, const string& target) {
     }
     return -1;
 }
-
 void question5() {
     cout << "Question 5: Search in array with empty strings" << endl;
     
@@ -157,7 +156,6 @@ void question5() {
     int index = searchSparseArray(arr, target);
     cout << "Index of \"" << target << "\": " << index << endl << endl;
 }
-
 
 pair<int, int> searchSortedMatrix(const vector<vector<int>>& matrix, int target) {
     if (matrix.empty() || matrix[0].empty()) return {-1, -1};
@@ -190,8 +188,6 @@ pair<int, int> searchSortedMatrix(const vector<vector<int>>& matrix, int target)
     }
     return {-1, -1};
 }
-
-
 void question6() {
     cout << "Question 6: Search in a sorted matrix" << endl;
     
@@ -217,7 +213,6 @@ struct Person {
     int height;
     int weight;
 };
-
 // Comparator for sorting by height, then weight
 bool comparePerson(const Person& a, const Person& b) {
     if (a.height == b.height)
@@ -273,7 +268,6 @@ int getRankOfNumber(const vector<int>& stream, int x) {
     }
     return count - 1;  
 }
-
 void question8() {
     cout << "Question 8: Rank from stream of integers (Direct Stream Usage)" << endl;
 
