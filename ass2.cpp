@@ -138,7 +138,7 @@ void question6(){
     bool found = false;
     for (int i = 0; i < n; i++) {
         if (arr[i] == key) {
-            cout << "Key found at index " << i << endl << endl;
+            cout << "Key found at index " << i<< endl;
             found = true;
             break;
         }
@@ -157,7 +157,7 @@ void question7(){
         int mid = (low + high) / 2;
 
         if (arr[mid] == key) {
-            cout << "Key found at index " << mid << endl << endl;
+            cout << "Key found at index " << mid << endl;
             found = true;
             break;
         } else if (arr[mid] < key) {
@@ -189,18 +189,18 @@ void question8(){
     }
     if (len >= 3) drops++;
 
-    cout << "Number of signal drops: " << drops << endl << endl;
+    cout << "Number of signal drops: " << drops  << endl;
 
 }
 
 int main() {
-    question1();
-    question2();
-    question3();
-    question4();
-    question5();
-    question6();
-    question7();
-    question8();
+    // question1();
+    //question2();
+    //question3();
+    // question4();
+     //question5();
+     //question6();
+     //question7();
+     question8();
     return 0;
 }
