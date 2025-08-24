@@ -4,38 +4,35 @@
 #include <set>
 using namespace std;
 
-void question1(){
-    int n;
-    cout << "Enter size of array: ";
-    cin >> n;
-
-    vector<int> arr(n);
-    cout << "Enter elements (first increasing then decreasing): ";
-    for (int i = 0; i < n; i++) {
-        cin >> arr[i];
-    }
+// Q1) Find maximum in bitonic array
+void question1() {
+    int n = 7;
+    vector<int> arr = {1, 3, 8, 12, 9, 5, 2};  
+    cout << "Array: ";
+    for (int val : arr) cout << val << " ";
+    cout << endl;
 
     int low = 0, high = n - 1;
     while (low <= high) {
         int mid = low + (high - low) / 2;
 
-        if ((arr[mid] > arr[mid - 1]) &&  (arr[mid] > arr[mid + 1])) {
-            cout << "Maximum element in  array: " << arr[mid] << endl;
+        if (mid > 0 && mid < n - 1 && arr[mid] > arr[mid - 1] && arr[mid] > arr[mid + 1]) {
+            cout << "Maximum element in array: " << arr[mid] << endl;
             return;
         }
-        else if ( arr[mid] < arr[mid + 1]) {
+        else if (mid < n - 1 && arr[mid] < arr[mid + 1]) {
             low = mid + 1;
         }
         else {
             high = mid - 1;
         }
     }
-    cout << "Invalid  array input!" << endl;
+    cout << "Invalid array input!" << endl;
 }
-
 
 int tileNumber = 1;
 
+// Recursive tiling function
 void tileBoard(vector<vector<int>>& board, int topRow, int topCol, int missingRow, int missingCol, int size) {
     if (size == 1) return;
 
@@ -75,12 +72,15 @@ void tileBoard(vector<vector<int>>& board, int topRow, int topCol, int missingRo
     }
 }
 
+// Q2) Tiling Problem
 void question2() {
-    int n, missingRow, missingCol;
-    cout << "Enter board size (n must be power of 2): ";
-    cin >> n;
-    cout << "Enter missing cell row and column (0-indexed): ";
-    cin >> missingRow >> missingCol;
+    // Predefined input
+    int n = 8;                 
+    int missingRow = 1;        
+    int missingCol = 1;        
+
+    cout << "\nBoard size: " << n << "x" << n << endl;
+    cout << "Missing cell: (" << missingRow << ", " << missingCol << ")\n";
 
     vector<vector<int>> board(n, vector<int>(n, 0));
     tileBoard(board, 0, 0, missingRow, missingCol, n);
@@ -94,12 +94,12 @@ void question2() {
     }
 }
 
-
+// Helper for Q3 (Skyline problem)
 vector<vector<int>> getSkyline(vector<vector<int>>& buildings) {
     vector<pair<int,int>> heights;
-    for(auto& b : buildings){
+    for (auto& b : buildings) {
         heights.push_back({b[0], -b[2]}); 
-        heights.push_back({b[1], b[2]});  
+        heights.push_back({b[1], b[2]}); 
     }
 
     sort(heights.begin(), heights.end());
@@ -108,15 +108,15 @@ vector<vector<int>> getSkyline(vector<vector<int>>& buildings) {
     int prev = 0;
     vector<vector<int>> res;
 
-    for(auto& h : heights){
-        if(h.second < 0){
-            mset.insert(-h.second); // entering building
+    for (auto& h : heights) {
+        if (h.second < 0) {
+            mset.insert(-h.second); 
         } else {
-            mset.erase(mset.find(h.second)); // leaving building
+            mset.erase(mset.find(h.second)); 
         }
 
         int cur = *mset.rbegin();
-        if(cur != prev){
+        if (cur != prev) {
             res.push_back({h.first, cur});
             prev = cur;
         }
@@ -124,8 +124,8 @@ vector<vector<int>> getSkyline(vector<vector<int>>& buildings) {
     return res;
 }
 
+// Q3) Skyline Problem
 void question3() {
-    
     vector<vector<int>> buildings = {
         {2, 9, 10}, 
         {3, 7, 15}, 
@@ -134,14 +134,21 @@ void question3() {
         {19, 24, 8}
     };
 
+    cout << "\nBuildings: ";
+    for (auto& b : buildings) {
+        cout << "(" << b[0] << "," << b[1] << "," << b[2] << ") ";
+    }
+    cout << endl;
+
     vector<vector<int>> skyline = getSkyline(buildings);
 
-    cout << "Skyline formed is:"<<endl;
-    for(auto& point : skyline){
+    cout << "Skyline formed is:\n";
+    for (auto& point : skyline) {
         cout << "[" << point[0] << "," << point[1] << "] ";
     }
     cout << endl;
 }
+
 
 int main() {
     question1();
